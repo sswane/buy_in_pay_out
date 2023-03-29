@@ -82,7 +82,8 @@ class _BasicBuyIn extends State<BasicBuyIn> {
           ),
           for (var player in appState.playersBets)
             ListTile(
-              title: Text("${player.name} - ${player.bet}"),
+              subtitle: Text("\$${player.bet.toStringAsFixed(2)}"),
+              title: Text(player.name),
               leading: IconButton(
                 icon: const Icon(
                   Icons.edit_outlined,
@@ -95,15 +96,28 @@ class _BasicBuyIn extends State<BasicBuyIn> {
                     builder: (context) {
                       return AlertDialog(
                         title: const Text('Edit individual bet'),
-                        content: TextField(
-                          autofocus: true,
-                          controller: indBetController,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                              RegExp(r'^\d+\.?\d{0,2}'),
-                            ),
-                          ],
-                        ),
+                        content: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Flexible(
+                                child: Icon(
+                                  Icons.attach_money_outlined,
+                                  semanticLabel: 'Buy In',
+                                ),
+                              ),
+                              Expanded(
+                                child: TextField(
+                                  autofocus: true,
+                                  controller: indBetController,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+\.?\d{0,2}'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ]),
+                        actionsAlignment: MainAxisAlignment.center,
                         actions: <Widget>[
                           ElevatedButton(
                             onPressed: () {
@@ -137,6 +151,10 @@ class _BasicBuyIn extends State<BasicBuyIn> {
                   MaterialPageRoute(builder: (context) => const BuyCash()),
                 );
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: theme.colorScheme.primary,
+                foregroundColor: theme.colorScheme.onPrimary,
+              ),
               child: const Text('Finalize Initial Bets'),
             ),
           ),
