@@ -127,7 +127,7 @@ class _IndividualBuyInState extends State<IndividualBuyIn> {
     var player = widget.player;
 
     return ListTile(
-      subtitle: Text("\$${player.bet.toStringAsFixed(2)}"),
+      subtitle: Text("\$${player.buyIn.toStringAsFixed(2)}"),
       title: Text(player.name),
       leading: IconButton(
         icon: const Icon(

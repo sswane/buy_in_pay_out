@@ -54,16 +54,17 @@ class _MainBodyState extends State<MainBody> {
 
 class PlayerBet {
   String name;
-  double bet;
+  double buyIn;
+  double cashOut;
 
-  PlayerBet({required this.name, required this.bet});
+  PlayerBet({required this.name, required this.buyIn, this.cashOut = 0});
 }
 
 class MyAppState extends ChangeNotifier {
   List<PlayerBet> playersBets = [];
 
   void addPlayer(String name) {
-    playersBets.add(PlayerBet(name: name, bet: 0));
+    playersBets.add(PlayerBet(name: name, buyIn: 0));
     notifyListeners();
   }
 
@@ -74,21 +75,32 @@ class MyAppState extends ChangeNotifier {
 
   void buyInAll(double num) {
     for (var player in playersBets) {
-      player.bet = num;
+      player.buyIn = num;
     }
     notifyListeners();
   }
 
   void editPlayerBet(PlayerBet player, double num) {
     var p = playersBets.singleWhere((element) => element.name == player.name);
-    p.bet = num;
+    p.buyIn = num;
+    notifyListeners();
+  }
+
+  void addPlayerBet(PlayerBet player, double num) {
+    var p = playersBets.singleWhere((element) => element.name == player.name);
+    p.buyIn = num + p.buyIn;
+    notifyListeners();
+  }
+
+  void cashOutPlayer(PlayerBet player, double num) {
+    var p = playersBets.singleWhere((element) => element.name == player.name);
+    p.cashOut = num;
     notifyListeners();
   }
 }
 
 class AddPlayers extends StatefulWidget {
   const AddPlayers({super.key});
-
   @override
   State<AddPlayers> createState() => _AddPlayersState();
 }
