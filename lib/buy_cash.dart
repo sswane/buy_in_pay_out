@@ -1,3 +1,4 @@
+import 'package:buy_in_pay_out/cash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -39,90 +40,13 @@ class _BuyCashState extends State<BuyCash> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for (var player in appState.playersBets)
-                  ListTile(
-                    title: Text(player.name),
-                    subtitle: Text("\$${player.buyIn.toStringAsFixed(2)}"),
-                    leading: IconButton(
-                      icon: const Icon(
-                        Icons.add,
-                        semanticLabel: 'Add More Funds',
-                      ),
-                      color: theme.colorScheme.primary,
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return IncreaseBuyIn(player: player);
-                          },
-                        );
-                      },
-                    ),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        // if user has cashed out, should disable button
-                        // Add pop up to accept $ from player
-                        // appState.cashOutPlayer(player);
-                      },
-                      child: const Text('Cash Out'),
-                    ),
+                  IndividualBuyCash(
+                    player: player,
                   ),
               ],
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-class IndividualBuyCash extends StatefulWidget {
-  const IndividualBuyCash({super.key, required this.player});
-  final PlayerBet player;
-  @override
-  State<IndividualBuyCash> createState() => _IndividualBuyCashState();
-}
-
-class _IndividualBuyCashState extends State<IndividualBuyCash> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final txtController = TextEditingController();
-
-  @override
-  void dispose() {
-    txtController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var theme = Theme.of(context);
-    var player = widget.player;
-
-    return ListTile(
-      title: Text(player.name),
-      subtitle: Text("\$${player.buyIn.toStringAsFixed(2)}"),
-      leading: IconButton(
-        icon: const Icon(
-          Icons.add,
-          semanticLabel: 'Add More Funds',
-        ),
-        color: theme.colorScheme.primary,
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return IncreaseBuyIn(player: player);
-            },
-          );
-        },
-      ),
-      trailing: ElevatedButton(
-        onPressed: () {
-          // if user has cashed out, should disable button
-          // Add pop up to accept $ from player
-          // appState.cashOutPlayer(player);
-        },
-        child: const Text('Cash Out'),
       ),
     );
   }
@@ -181,7 +105,7 @@ class _IncreaseBuyInState extends State<IncreaseBuyIn> {
                 },
                 onFieldSubmitted: (String? value) {
                   if (_formKey.currentState!.validate()) {
-                    appState.addPlayerBet(
+                    appState.addToPlayerBuyIn(
                         player, double.parse(txtController.text));
                     txtController.clear();
                     Navigator.pop(context);
@@ -195,7 +119,7 @@ class _IncreaseBuyInState extends State<IncreaseBuyIn> {
       actions: <Widget>[
         ElevatedButton(
           onPressed: () {
-            appState.addPlayerBet(player, double.parse(txtController.text));
+            appState.addToPlayerBuyIn(player, double.parse(txtController.text));
             txtController.clear();
             Navigator.pop(context);
           },
@@ -209,6 +133,47 @@ class _IncreaseBuyInState extends State<IncreaseBuyIn> {
           child: const Text('Cancel'),
         )
       ],
+    );
+  }
+}
+
+class IndividualBuyCash extends StatelessWidget {
+  const IndividualBuyCash({super.key, required this.player});
+  final PlayerBet player;
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
+    return ListTile(
+      title: Text(player.name),
+      subtitle: Text("\$${player.buyIn.toStringAsFixed(2)}"),
+      leading: IconButton(
+        icon: const Icon(
+          Icons.add,
+          semanticLabel: 'Add More Funds',
+        ),
+        color: theme.colorScheme.primary,
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return IncreaseBuyIn(player: player);
+            },
+          );
+        },
+      ),
+      trailing: ElevatedButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return IndividualCashOut(player: player);
+            },
+          );
+        },
+        child: const Text('Cash Out'),
+      ),
     );
   }
 }

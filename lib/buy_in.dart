@@ -169,7 +169,7 @@ class _IndividualBuyInState extends State<IndividualBuyIn> {
                             },
                             onFieldSubmitted: (String? value) {
                               if (_formKey.currentState!.validate()) {
-                                appState.editPlayerBet(
+                                appState.editPlayerBuyIn(
                                     player, double.parse(txtController.text));
                                 txtController.clear();
                                 Navigator.pop(context);
@@ -183,10 +183,12 @@ class _IndividualBuyInState extends State<IndividualBuyIn> {
                 actions: <Widget>[
                   ElevatedButton(
                     onPressed: () {
-                      appState.editPlayerBet(
-                          player, double.parse(txtController.text));
-                      txtController.clear();
-                      Navigator.pop(context);
+                      if (_formKey.currentState!.validate()) {
+                        appState.editPlayerBuyIn(
+                            player, double.parse(txtController.text));
+                        txtController.clear();
+                        Navigator.pop(context);
+                      }
                     },
                     child: const Text('Submit'),
                   ),
