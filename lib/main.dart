@@ -51,49 +51,55 @@ class _MainBodyState extends State<MainBody> {
   }
 }
 
-class PlayerBet {
+class Player {
   String name;
   double buyIn;
   double cashOut;
+  bool cashed;
 
-  PlayerBet({required this.name, required this.buyIn, this.cashOut = 0});
+  Player(
+      {required this.name,
+      this.buyIn = 0,
+      this.cashOut = 0,
+      this.cashed = false});
 }
 
 class MyAppState extends ChangeNotifier {
-  List<PlayerBet> playersBets = [];
+  List<Player> players = [];
 
   void addPlayer(String name) {
-    playersBets.add(PlayerBet(name: name, buyIn: 0));
+    players.add(Player(name: name));
     notifyListeners();
   }
 
   void removePlayer(String name) {
-    playersBets.removeWhere((element) => element.name == name);
+    players.removeWhere((element) => element.name == name);
     notifyListeners();
   }
 
   void buyInAll(double num) {
-    for (var player in playersBets) {
+    for (var player in players) {
       player.buyIn = num;
     }
     notifyListeners();
   }
 
-  void editPlayerBuyIn(PlayerBet player, double num) {
-    var p = playersBets.singleWhere((element) => element.name == player.name);
+  void editPlayerBuyIn(Player player, double num) {
+    var p = players.singleWhere((element) => element.name == player.name);
     p.buyIn = num;
     notifyListeners();
   }
 
-  void addToPlayerBuyIn(PlayerBet player, double num) {
-    var p = playersBets.singleWhere((element) => element.name == player.name);
+  void addToPlayerBuyIn(Player player, double num) {
+    var p = players.singleWhere((element) => element.name == player.name);
     p.buyIn = num + p.buyIn;
     notifyListeners();
   }
 
-  void cashOutPlayer(PlayerBet player, double num) {
-    var p = playersBets.singleWhere((element) => element.name == player.name);
+  void cashOutPlayer(Player player, double num) {
+    var p = players.singleWhere((element) => element.name == player.name);
     p.cashOut = num;
+    p.cashed = true;
     notifyListeners();
   }
 }

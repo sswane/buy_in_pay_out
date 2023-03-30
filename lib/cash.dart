@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:buy_in_pay_out/main.dart';
 
 class IndividualCashOut extends StatefulWidget {
-  const IndividualCashOut({super.key, required this.player});
-  final PlayerBet player;
+  const IndividualCashOut(
+      {super.key, required this.player, required this.remainingPot});
+  final Player player;
+  final double remainingPot;
   @override
   State<IndividualCashOut> createState() => _IndividualCashOutState();
 }
@@ -24,6 +26,7 @@ class _IndividualCashOutState extends State<IndividualCashOut> {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var player = widget.player;
+    double remainingPot = widget.remainingPot;
 
     return AlertDialog(
       title: const Text('Cash Out'),
@@ -52,7 +55,9 @@ class _IndividualCashOutState extends State<IndividualCashOut> {
                   if (value == null || value.isEmpty) {
                     return 'Input valid cash out. Numbers up to 2 decimals allowed.';
                   }
-                  return null;
+                  if (double.parse(value) > remainingPot) {
+                    return 'Insufficient funds';
+                  }
                 },
                 onFieldSubmitted: (String? value) {
                   if (_formKey.currentState!.validate()) {

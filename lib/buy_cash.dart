@@ -18,33 +18,60 @@ class _BuyCashState extends State<BuyCash> {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var theme = Theme.of(context);
+    // Refactor this later...would be great to dynamically have these values from state
+    double totalPot = appState.players.fold(0, (total, p) => total + p.buyIn);
+    double remainingPot =
+        totalPot - appState.players.fold(0, (total, p) => total + p.cashOut);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Buy In Cash Out')),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: theme.colorScheme.primary,
-                foregroundColor: theme.colorScheme.onPrimary,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: theme.colorScheme.primary,
+                  foregroundColor: theme.colorScheme.onPrimary,
+                ),
+                child: const Text('Cash All Out'),
               ),
-              child: const Text('Cash All Out'),
-            ),
-          ]),
+            ],
+          ),
           Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                for (var player in appState.playersBets)
+                for (var player in appState.players)
                   IndividualBuyCash(
                     player: player,
+                    remainingPot: remainingPot,
                   ),
               ],
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              SizedBox(
+                width: 100,
+                child: ListTile(
+                  title: Text('\$${totalPot.toStringAsFixed(2)}'),
+                  subtitle: const Text('Total Pot'),
+                ),
+              ),
+              SizedBox(
+                width: 130,
+                child: ListTile(
+                  title: Text('\$${remainingPot.toStringAsFixed(2)}'),
+                  subtitle: const Text('Remaining Pot'),
+                ),
+              ),
+            ],
           )
         ],
       ),
@@ -54,7 +81,7 @@ class _BuyCashState extends State<BuyCash> {
 
 class IncreaseBuyIn extends StatefulWidget {
   const IncreaseBuyIn({super.key, required this.player});
-  final PlayerBet player;
+  final Player player;
   @override
   State<IncreaseBuyIn> createState() => _IncreaseBuyInState();
 }
@@ -138,8 +165,10 @@ class _IncreaseBuyInState extends State<IncreaseBuyIn> {
 }
 
 class IndividualBuyCash extends StatelessWidget {
-  const IndividualBuyCash({super.key, required this.player});
-  final PlayerBet player;
+  const IndividualBuyCash(
+      {super.key, required this.player, required this.remainingPot});
+  final Player player;
+  final double remainingPot;
 
   @override
   Widget build(BuildContext context) {
@@ -154,25 +183,34 @@ class IndividualBuyCash extends StatelessWidget {
           semanticLabel: 'Add More Funds',
         ),
         color: theme.colorScheme.primary,
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return IncreaseBuyIn(player: player);
-            },
-          );
-        },
+        onPressed: player.cashed == true
+            ? null
+            : () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return IncreaseBuyIn(player: player);
+                  },
+                );
+              },
       ),
       trailing: ElevatedButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return IndividualCashOut(player: player);
-            },
-          );
-        },
-        child: const Text('Cash Out'),
+        onPressed: player.cashed == true
+            ? null
+            : () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return IndividualCashOut(
+                      player: player,
+                      remainingPot: remainingPot,
+                    );
+                  },
+                );
+              },
+        child: player.cashed == false
+            ? const Text('Cash Out')
+            : Text('\$${player.cashOut.toStringAsFixed(2)}'),
       ),
     );
   }

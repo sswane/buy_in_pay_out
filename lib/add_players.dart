@@ -71,7 +71,7 @@ class _AddPlayersState extends State<AddPlayers> {
                     if (value == null || value.isEmpty) {
                       return 'Name is required.';
                     }
-                    if (appState.playersBets.singleWhereOrNull(
+                    if (appState.players.singleWhereOrNull(
                             (player) => player.name == value) !=
                         null) {
                       return 'No duplicate names allowed';
@@ -103,9 +103,9 @@ class _AddPlayersState extends State<AddPlayers> {
           ),
           Padding(
             padding: const EdgeInsets.all(20),
-            child: Text(playerString(appState.playersBets.length)),
+            child: Text(playerString(appState.players.length)),
           ),
-          for (var player in appState.playersBets)
+          for (var player in appState.players)
             ListTile(
               leading: IconButton(
                 icon: const Icon(

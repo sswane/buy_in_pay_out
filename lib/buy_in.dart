@@ -79,8 +79,7 @@ class _BasicBuyIn extends State<BasicBuyIn> {
             padding: EdgeInsets.all(20),
             child: Text('Buy In Per Player:'),
           ),
-          for (var player in appState.playersBets)
-            IndividualBuyIn(player: player),
+          for (var player in appState.players) IndividualBuyIn(player: player),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: ElevatedButton(
@@ -105,7 +104,7 @@ class _BasicBuyIn extends State<BasicBuyIn> {
 
 class IndividualBuyIn extends StatefulWidget {
   const IndividualBuyIn({super.key, required this.player});
-  final PlayerBet player;
+  final Player player;
   @override
   State<IndividualBuyIn> createState() => _IndividualBuyInState();
 }
