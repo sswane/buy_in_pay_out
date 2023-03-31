@@ -1,16 +1,9 @@
 # buy_in_pay_out
 
-A new Flutter project. Bet with friends with least number of payouts. Not necessary to pay the pot upfront.
+A new Flutter project. Bet with friends with the least number of payouts. Not necessary to pay the pot upfront.
 
-## Getting Started
+## Additional Info
+This is my first Flutter project. Still learning. Lots of clean up to do, don't judge me yet. 
 
-This project is a starting point for a Flutter application.
+This project was developed as a way for friends to bet with chips and later pay out online in the least number of transactions. Players can cash out before others in case someone leaves mid-game. 
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

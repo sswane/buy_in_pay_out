@@ -1,12 +1,12 @@
-import 'package:buy_in_pay_out/cash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
+import 'cash.dart';
+import 'payout.dart';
 
 class BuyCash extends StatefulWidget {
   const BuyCash({super.key});
-
   @override
   State<BuyCash> createState() => _BuyCashState();
 }
@@ -32,7 +32,7 @@ class _BuyCashState extends State<BuyCash> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: remainingPot == 0 ? null : () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.colorScheme.primary,
                   foregroundColor: theme.colorScheme.onPrimary,
@@ -58,7 +58,7 @@ class _BuyCashState extends State<BuyCash> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               SizedBox(
-                width: 100,
+                width: 110,
                 child: ListTile(
                   title: Text('\$${totalPot.toStringAsFixed(2)}'),
                   subtitle: const Text('Total Pot'),
@@ -72,7 +72,28 @@ class _BuyCashState extends State<BuyCash> {
                 ),
               ),
             ],
-          )
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: remainingPot == 0
+                    ? () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Payout()),
+                        );
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: theme.colorScheme.primary,
+                  foregroundColor: theme.colorScheme.onPrimary,
+                ),
+                child: const Text('Determine Payout'),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -158,7 +179,7 @@ class _IncreaseBuyInState extends State<IncreaseBuyIn> {
             Navigator.pop(context);
           },
           child: const Text('Cancel'),
-        )
+        ),
       ],
     );
   }

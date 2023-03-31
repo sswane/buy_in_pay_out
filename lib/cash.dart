@@ -58,6 +58,7 @@ class _IndividualCashOutState extends State<IndividualCashOut> {
                   if (double.parse(value) > remainingPot) {
                     return 'Insufficient funds';
                   }
+                  return null;
                 },
                 onFieldSubmitted: (String? value) {
                   if (_formKey.currentState!.validate()) {
