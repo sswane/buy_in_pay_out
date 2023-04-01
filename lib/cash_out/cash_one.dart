@@ -62,7 +62,7 @@ class _IndividualCashOutState extends State<IndividualCashOut> {
                 },
                 onFieldSubmitted: (String? value) {
                   if (_formKey.currentState!.validate()) {
-                    appState.cashOutPlayer(
+                    appState.cashOutEarly(
                         player, double.parse(txtController.text));
                     txtController.clear();
                     Navigator.pop(context);

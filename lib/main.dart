@@ -55,13 +55,13 @@ class Player {
   String name;
   double buyIn;
   double cashOut;
-  bool cashed;
+  bool cashedEarly;
 
   Player(
       {required this.name,
       this.buyIn = 0,
       this.cashOut = 0,
-      this.cashed = false});
+      this.cashedEarly = false});
 }
 
 class MyAppState extends ChangeNotifier {
@@ -72,8 +72,8 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removePlayer(String name) {
-    players.removeWhere((element) => element.name == name);
+  void removePlayer(Player player) {
+    players.remove(player);
     notifyListeners();
   }
 
@@ -85,21 +85,22 @@ class MyAppState extends ChangeNotifier {
   }
 
   void editPlayerBuyIn(Player player, double num) {
-    var p = players.singleWhere((element) => element.name == player.name);
-    p.buyIn = num;
+    player.buyIn = num;
     notifyListeners();
   }
 
   void addToPlayerBuyIn(Player player, double num) {
-    var p = players.singleWhere((element) => element.name == player.name);
-    p.buyIn = num + p.buyIn;
+    player.buyIn = num + player.buyIn;
     notifyListeners();
   }
 
   void cashOutPlayer(Player player, double num) {
-    var p = players.singleWhere((element) => element.name == player.name);
-    p.cashOut = num;
-    p.cashed = true;
+    player.cashOut = num;
     notifyListeners();
+  }
+
+  void cashOutEarly(Player player, double num) {
+    player.cashedEarly = true;
+    cashOutPlayer(player, num);
   }
 }

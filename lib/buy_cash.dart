@@ -1,9 +1,11 @@
+import 'package:buy_in_pay_out/cash_out/cash_all.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
-import 'cash.dart';
-import 'payout.dart';
+import 'cash_out/cash_one.dart';
+import 'payout/determine_payout.dart';
+import 'pot.dart';
 
 class BuyCash extends StatefulWidget {
   const BuyCash({super.key});
@@ -32,7 +34,15 @@ class _BuyCashState extends State<BuyCash> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: remainingPot == 0 ? null : () {},
+                onPressed: remainingPot == 0
+                    ? null
+                    : () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CashAllOut()),
+                        );
+                      },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.colorScheme.primary,
                   foregroundColor: theme.colorScheme.onPrimary,
@@ -54,45 +64,9 @@ class _BuyCashState extends State<BuyCash> {
               ],
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              SizedBox(
-                width: 110,
-                child: ListTile(
-                  title: Text('\$${totalPot.toStringAsFixed(2)}'),
-                  subtitle: const Text('Total Pot'),
-                ),
-              ),
-              SizedBox(
-                width: 130,
-                child: ListTile(
-                  title: Text('\$${remainingPot.toStringAsFixed(2)}'),
-                  subtitle: const Text('Remaining Pot'),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: remainingPot == 0
-                    ? () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Payout()),
-                        );
-                      }
-                    : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.colorScheme.primary,
-                  foregroundColor: theme.colorScheme.onPrimary,
-                ),
-                child: const Text('Determine Payout'),
-              ),
-            ],
+          const Pot(),
+          DeterminePayout(
+            remainingPot: remainingPot,
           ),
         ],
       ),
@@ -204,7 +178,7 @@ class IndividualBuyCash extends StatelessWidget {
           semanticLabel: 'Add More Funds',
         ),
         color: theme.colorScheme.primary,
-        onPressed: player.cashed == true
+        onPressed: player.cashedEarly == true
             ? null
             : () {
                 showDialog(
@@ -216,7 +190,7 @@ class IndividualBuyCash extends StatelessWidget {
               },
       ),
       trailing: ElevatedButton(
-        onPressed: player.cashed == true
+        onPressed: player.cashedEarly == true
             ? null
             : () {
                 showDialog(
@@ -229,7 +203,7 @@ class IndividualBuyCash extends StatelessWidget {
                   },
                 );
               },
-        child: player.cashed == false
+        child: player.cashedEarly == false
             ? const Text('Cash Out')
             : Text('\$${player.cashOut.toStringAsFixed(2)}'),
       ),

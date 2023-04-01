@@ -93,6 +93,7 @@ class _AddPlayersState extends State<AddPlayers> {
                       if (_formKey.currentState!.validate()) {
                         appState.addPlayer(txtController.text);
                         txtController.clear();
+                        playerFieldFocusNode.requestFocus();
                       }
                     },
                     child: const Text('Submit'),
@@ -114,7 +115,7 @@ class _AddPlayersState extends State<AddPlayers> {
                 ),
                 color: theme.colorScheme.primary,
                 onPressed: () {
-                  appState.removePlayer(player.name);
+                  appState.removePlayer(player);
                 },
               ),
               title: Text(player.name),
