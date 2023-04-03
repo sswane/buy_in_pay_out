@@ -56,12 +56,14 @@ class Player {
   double buyIn;
   double cashOut;
   bool cashedEarly;
+  double payout;
 
   Player(
       {required this.name,
       this.buyIn = 0,
       this.cashOut = 0,
-      this.cashedEarly = false});
+      this.cashedEarly = false,
+      this.payout = 0});
 }
 
 class MyAppState extends ChangeNotifier {
@@ -102,5 +104,12 @@ class MyAppState extends ChangeNotifier {
   void cashOutEarly(Player player, double num) {
     player.cashedEarly = true;
     cashOutPlayer(player, num);
+  }
+
+  void payout() {
+    for (var player in players) {
+      player.payout = player.cashOut - player.buyIn;
+    }
+    notifyListeners();
   }
 }

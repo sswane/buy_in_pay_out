@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../main.dart';
 import '../payout/determine_payout.dart';
@@ -60,6 +61,11 @@ class _CashAllOutState extends State<CashAllOut> {
                                     semanticLabel: 'Cash Out',
                                   ),
                                 ),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d+\.?\d{0,2}'),
+                                  ),
+                                ],
                                 onChanged: (text) {
                                   appState.cashOutPlayer(player,
                                       text.isEmpty ? 0 : double.parse(text));

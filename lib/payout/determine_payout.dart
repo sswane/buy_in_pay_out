@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../main.dart';
 import 'payout.dart';
 
 class DeterminePayout extends StatelessWidget {
@@ -8,6 +10,7 @@ class DeterminePayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var appState = context.watch<MyAppState>();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -15,6 +18,7 @@ class DeterminePayout extends StatelessWidget {
         ElevatedButton(
           onPressed: remainingPot == 0
               ? () {
+                  appState.payout();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const Payout()),
