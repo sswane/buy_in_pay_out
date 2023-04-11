@@ -19,6 +19,7 @@ class DeterminePayout extends StatelessWidget {
           onPressed: remainingPot == 0
               ? () {
                   appState.payout();
+                  appState.calculateTransactions(appState.players);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const Payout()),

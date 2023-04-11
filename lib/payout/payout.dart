@@ -10,7 +10,7 @@ class Payout extends StatelessWidget {
     var appState = context.watch<MyAppState>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Payout under construction...')),
+      appBar: AppBar(title: const Text('Payout / Transactions')),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: <Widget>[
@@ -18,6 +18,8 @@ class Payout extends StatelessWidget {
             Column(
               children: [
                 IndividualPayout(player: player),
+                Text(
+                    'Buy In: ${player.buyIn.toStringAsFixed(2)}, Cashed Out: ${player.cashOut.toStringAsFixed(2)} '),
                 Distribute(player: player),
               ],
             ),
@@ -33,15 +35,22 @@ class Distribute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var word = player.payout == 0
-        ? 'broke even, does not owe or is owed'
-        : 'under construction';
-
-    return Row(
-      children: [
-        Text(word),
-      ],
-    );
+    if (player.transactions.isEmpty) {
+      return Row(
+        children: [
+          player.payout == 0
+              ? const Text('...broke even')
+              : const Text('under construction')
+        ],
+      );
+    } else {
+      return Row(
+        children: [
+          for (var c in player.transactions)
+            Text('${c.player.name} ${c.num.toStringAsFixed(2)} '),
+        ],
+      );
+    }
   }
 }
 
@@ -53,7 +62,7 @@ class IndividualPayout extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var name = player.name;
-    var payout = player.payout;
+    var totalPayout = player.cashOut - player.buyIn;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -66,12 +75,12 @@ class IndividualPayout extends StatelessWidget {
           width: 140,
           child: ListTile(
             title: Text(
-              payout.toStringAsFixed(2),
+              totalPayout.toStringAsFixed(2),
               textAlign: TextAlign.right,
             ),
-            tileColor: payout.isNegative
+            tileColor: totalPayout.isNegative
                 ? Colors.red
-                : payout == 0
+                : totalPayout == 0
                     ? theme.colorScheme.inversePrimary
                     : Colors.green,
             shape: RoundedRectangleBorder(
