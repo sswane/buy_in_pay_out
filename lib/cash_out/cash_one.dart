@@ -76,7 +76,7 @@ class _IndividualCashOutState extends State<IndividualCashOut> {
       actions: <Widget>[
         ElevatedButton(
           onPressed: () {
-            appState.cashOutPlayer(player, double.parse(txtController.text));
+            appState.cashOutEarly(player, double.parse(txtController.text));
             txtController.clear();
             Navigator.pop(context);
           },
