@@ -76,6 +76,7 @@ class _BuyCashState extends State<BuyCash> {
             ),
           ),
           const Pot(),
+          const Padding(padding: EdgeInsets.only(top: 10.0)),
           const DeterminePayout(),
         ],
       ),

@@ -22,8 +22,9 @@ class Pot extends StatelessWidget {
         SizedBox(
           width: 131,
           child: ListTile(
-            title: Text('\$${appState.getRemainingPot().toStringAsFixed(2)}'),
-            subtitle: const Text('Remaining Pot'),
+            title: Text('\$${appState.getRemainingPot().toStringAsFixed(2)}',
+                textAlign: TextAlign.right),
+            subtitle: const Text('Remaining Pot', textAlign: TextAlign.right),
           ),
         ),
       ],

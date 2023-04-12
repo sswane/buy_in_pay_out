@@ -31,7 +31,9 @@ class _CashAllOutState extends State<CashAllOut> {
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: [
-          const Pot(),
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: const [
+            DeterminePayout(),
+          ]),
           Form(
             key: _formKey,
             child: Column(
@@ -75,8 +77,8 @@ class _CashAllOutState extends State<CashAllOut> {
               ],
             ),
           ),
-          const Padding(padding: EdgeInsets.all(20.0)),
-          const DeterminePayout(),
+          const Padding(padding: EdgeInsets.only(top: 10)),
+          const Pot(),
         ],
       ),
     );
