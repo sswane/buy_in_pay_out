@@ -35,14 +35,10 @@ class Payout extends StatelessWidget {
           ),
           for (var player in appState.players)
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 IndividualPayout(player: player),
-                Row(
-                  children: [
-                    const Padding(padding: EdgeInsets.only(left: 20.0)),
-                    Distribute(transactions: player.transactions),
-                  ],
-                )
+                Distribute(transactions: player.transactions),
               ],
             ),
         ],
@@ -57,16 +53,17 @@ class Distribute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        for (var t in transactions)
-          t.num > 0
-              ? Text('${t.player.name} \$${t.num.toStringAsFixed(2)}  ')
-              : Text(
-                  '${t.player.name} -\$${t.num.abs().toStringAsFixed(2)}  ',
-                ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Wrap(
+        spacing: 10.0,
+        children: <Widget>[
+          for (var t in transactions)
+            t.num > 0
+                ? Text('${t.player.name} \$${t.num.toStringAsFixed(2)}')
+                : Text('${t.player.name} -\$${t.num.abs().toStringAsFixed(2)}')
+        ],
+      ),
     );
   }
 }
