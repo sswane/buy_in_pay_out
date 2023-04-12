@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:buy_in_pay_out/main.dart';
+import 'package:buy_in_pay_out/app_state.dart';
+import '../players/player.dart';
 
 class IndividualCashOut extends StatefulWidget {
   const IndividualCashOut(

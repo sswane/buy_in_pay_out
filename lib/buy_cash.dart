@@ -1,11 +1,13 @@
-import 'package:buy_in_pay_out/cash_out/cash_all.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'main.dart';
+import 'app_state.dart';
+import 'cash_out/cash_all.dart';
 import 'cash_out/cash_one.dart';
 import 'payout/determine_payout.dart';
+import 'players/add_player.dart';
 import 'pot.dart';
+import 'players/player.dart';
 
 class BuyCash extends StatefulWidget {
   const BuyCash({super.key});
@@ -31,8 +33,25 @@ class _BuyCashState extends State<BuyCash> {
         padding: const EdgeInsets.all(20.0),
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Flexible(
+                  child: IconButton(
+                      icon: const Icon(Icons.person_add),
+                      color: theme.colorScheme.primary,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const AlertDialog(
+                              title: Text('Add Player'),
+                              actionsAlignment: MainAxisAlignment.center,
+                              content: AddPlayer(),
+                              actions: [],
+                            );
+                          },
+                        );
+                      })),
               ElevatedButton(
                 onPressed: remainingPot == 0
                     ? null
@@ -54,7 +73,6 @@ class _BuyCashState extends State<BuyCash> {
           Form(
             key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for (var player in appState.players)
                   IndividualBuyCash(
@@ -172,6 +190,7 @@ class IndividualBuyCash extends StatelessWidget {
     return ListTile(
       title: Text(player.name),
       subtitle: Text("\$${player.buyIn.toStringAsFixed(2)}"),
+      contentPadding: const EdgeInsets.all(0),
       leading: IconButton(
         icon: const Icon(
           Icons.add,

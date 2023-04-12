@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../main.dart';
+import '../app_state.dart';
 import '../payout/determine_payout.dart';
 import '../pot.dart';
 

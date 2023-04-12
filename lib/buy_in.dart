@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'main.dart';
+import 'app_state.dart';
 import 'buy_cash.dart';
+import 'players/player.dart';
 
 class BasicBuyIn extends StatefulWidget {
   const BasicBuyIn({super.key});

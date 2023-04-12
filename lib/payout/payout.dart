@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../main.dart';
+import '../app_state.dart';
+import '../players/player.dart';
 
 class Payout extends StatelessWidget {
   const Payout({super.key});
