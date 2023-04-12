@@ -8,24 +8,21 @@ class Pot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
-    // Refactor this later...would be great to dynamically have these values from state
-    double totalPot = appState.players.fold(0, (total, p) => total + p.buyIn);
-    double remainingPot =
-        totalPot - appState.players.fold(0, (total, p) => total + p.cashOut);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
           width: 131,
           child: ListTile(
-            title: Text('\$${totalPot.toStringAsFixed(2)}'),
+            title: Text('\$${appState.getTotalPot().toStringAsFixed(2)}'),
             subtitle: const Text('Total Pot'),
           ),
         ),
         SizedBox(
           width: 131,
           child: ListTile(
-            title: Text('\$${remainingPot.toStringAsFixed(2)}'),
+            title: Text('\$${appState.getRemainingPot().toStringAsFixed(2)}'),
             subtitle: const Text('Remaining Pot'),
           ),
         ),

@@ -1,9 +1,9 @@
 import 'package:buy_in_pay_out/players/list_players.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'buy_in/basic.dart';
 import 'players/add_player.dart';
 import 'app_state.dart';
-import 'buy_in.dart';
 
 void main() => runApp(const MyApp());
 

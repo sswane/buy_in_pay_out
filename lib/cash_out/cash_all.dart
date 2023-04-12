@@ -25,10 +25,6 @@ class _CashAllOutState extends State<CashAllOut> {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
 
-    double totalPot = appState.players.fold(0, (total, p) => total + p.buyIn);
-    double remainingPot =
-        totalPot - appState.players.fold(0, (total, p) => total + p.cashOut);
-
     return Scaffold(
       appBar: AppBar(title: const Text('Input Remaining Funds')),
       body: ListView(
@@ -79,7 +75,7 @@ class _CashAllOutState extends State<CashAllOut> {
             ),
           ),
           const Padding(padding: EdgeInsets.all(20.0)),
-          DeterminePayout(remainingPot: remainingPot),
+          const DeterminePayout(),
         ],
       ),
     );

@@ -7,6 +7,14 @@ class MyAppState extends ChangeNotifier {
   List<Player> winners = [];
   List<Player> losers = [];
 
+  double getTotalPot() {
+    return players.fold(0, (total, p) => total + p.buyIn);
+  }
+
+  double getRemainingPot() {
+    return getTotalPot() - players.fold(0.0, (total, p) => total + p.cashOut);
+  }
+
   void addPlayer(String name) {
     players.add(Player(name: name));
     notifyListeners();

@@ -4,8 +4,7 @@ import '../app_state.dart';
 import 'payout.dart';
 
 class DeterminePayout extends StatelessWidget {
-  const DeterminePayout({super.key, required this.remainingPot});
-  final double remainingPot;
+  const DeterminePayout({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class DeterminePayout extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
-          onPressed: remainingPot == 0
+          onPressed: appState.getRemainingPot() == 0
               ? () {
                   appState.payout();
                   appState.calculateTransactions(appState.players);

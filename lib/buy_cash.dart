@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'app_state.dart';
+import 'buy_in/increase.dart';
 import 'cash_out/cash_all.dart';
 import 'cash_out/cash_one.dart';
 import 'payout/determine_payout.dart';
@@ -22,10 +22,6 @@ class _BuyCashState extends State<BuyCash> {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var theme = Theme.of(context);
-    // Refactor this later...would be great to dynamically have these values from state
-    double totalPot = appState.players.fold(0, (total, p) => total + p.buyIn);
-    double remainingPot =
-        totalPot - appState.players.fold(0, (total, p) => total + p.cashOut);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Buy In Cash Out')),
@@ -53,7 +49,7 @@ class _BuyCashState extends State<BuyCash> {
                         );
                       })),
               ElevatedButton(
-                onPressed: remainingPot == 0
+                onPressed: appState.getRemainingPot() == 0
                     ? null
                     : () {
                         Navigator.push(
@@ -77,114 +73,25 @@ class _BuyCashState extends State<BuyCash> {
                 for (var player in appState.players)
                   IndividualBuyCash(
                     player: player,
-                    remainingPot: remainingPot,
                   ),
               ],
             ),
           ),
           const Pot(),
-          DeterminePayout(
-            remainingPot: remainingPot,
-          ),
+          const DeterminePayout(),
         ],
       ),
     );
   }
 }
 
-class IncreaseBuyIn extends StatefulWidget {
-  const IncreaseBuyIn({super.key, required this.player});
+class IndividualBuyCash extends StatelessWidget {
+  const IndividualBuyCash({super.key, required this.player});
   final Player player;
-  @override
-  State<IncreaseBuyIn> createState() => _IncreaseBuyInState();
-}
-
-class _IncreaseBuyInState extends State<IncreaseBuyIn> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final txtController = TextEditingController();
-
-  @override
-  void dispose() {
-    txtController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
-    var player = widget.player;
-
-    return AlertDialog(
-      title: const Text('Increase Buy In'),
-      actionsAlignment: MainAxisAlignment.center,
-      content: Form(
-        key: _formKey,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Flexible(
-              child: Icon(
-                Icons.attach_money_outlined,
-                semanticLabel: 'Buy In',
-              ),
-            ),
-            Expanded(
-              child: TextFormField(
-                autofocus: true,
-                controller: txtController,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                    RegExp(r'^\d+\.?\d{0,2}'),
-                  ),
-                ],
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Input valid buy in. Numbers up to 2 decimals allowed.';
-                  }
-                  return null;
-                },
-                onFieldSubmitted: (String? value) {
-                  if (_formKey.currentState!.validate()) {
-                    appState.addToPlayerBuyIn(
-                        player, double.parse(txtController.text));
-                    txtController.clear();
-                    Navigator.pop(context);
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-      actions: <Widget>[
-        ElevatedButton(
-          onPressed: () {
-            appState.addToPlayerBuyIn(player, double.parse(txtController.text));
-            txtController.clear();
-            Navigator.pop(context);
-          },
-          child: const Text('Submit'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            txtController.clear();
-            Navigator.pop(context);
-          },
-          child: const Text('Cancel'),
-        ),
-      ],
-    );
-  }
-}
-
-class IndividualBuyCash extends StatelessWidget {
-  const IndividualBuyCash(
-      {super.key, required this.player, required this.remainingPot});
-  final Player player;
-  final double remainingPot;
-
-  @override
-  Widget build(BuildContext context) {
     var theme = Theme.of(context);
 
     return ListTile(
@@ -217,7 +124,7 @@ class IndividualBuyCash extends StatelessWidget {
                   builder: (context) {
                     return IndividualCashOut(
                       player: player,
-                      remainingPot: remainingPot,
+                      remainingPot: appState.getRemainingPot(),
                     );
                   },
                 );
