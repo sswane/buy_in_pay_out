@@ -23,7 +23,7 @@ class MyAppState extends ChangeNotifier {
   }
 
   void addPlayer(String name) {
-    players.add(Player(name: name));
+    players.add(Player(name: name.trim()));
     notifyListeners();
   }
 

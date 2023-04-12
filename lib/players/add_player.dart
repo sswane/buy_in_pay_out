@@ -53,7 +53,7 @@ class _AddPlayerState extends State<AddPlayer> {
                     return 'Name is required';
                   }
                   if (appState.players.singleWhereOrNull(
-                          (player) => player.name == value) !=
+                          (player) => player.name == value.trim()) !=
                       null) {
                     playerFieldFocusNode.requestFocus();
                     return 'No duplicate names allowed';

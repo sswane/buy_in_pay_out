@@ -11,7 +11,6 @@ class AddPlayerMidGame extends StatefulWidget {
   State<StatefulWidget> createState() => _AddPlayerMidGameState();
 }
 
-// Currently doing different stuff button vs enter, should we leave add players open?
 class _AddPlayerMidGameState extends State<AddPlayerMidGame> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final playerTxtCtrl = TextEditingController();
@@ -113,8 +112,8 @@ class _AddPlayerMidGameState extends State<AddPlayerMidGame> {
                   playerTxtCtrl.clear();
                   buyInTxtCtrl.clear();
                   // Could close this or leave open
-                  // Navigator.pop(context);
-                  playerFieldFocusNode.requestFocus();
+                  Navigator.pop(context);
+                  // playerFieldFocusNode.requestFocus();
                 }
               },
             ),
