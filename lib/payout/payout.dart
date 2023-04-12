@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../app_state.dart';
 import '../players/player.dart';
+import '../players/player_info.dart';
 
 class Payout extends StatelessWidget {
   const Payout({super.key});
@@ -19,6 +20,13 @@ class Payout extends StatelessWidget {
             Column(
               children: [
                 IndividualPayout(player: player),
+                Row(
+                  children: [
+                    // const Padding(padding: EdgeInsets.only(left: 70.0)),
+                    const Padding(padding: EdgeInsets.only(left: 20.0)),
+                    Distribute(transactions: player.transactions),
+                  ],
+                )
               ],
             ),
         ],
@@ -54,31 +62,13 @@ class IndividualPayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var name = player.name;
     var totalPayout = player.cashOut - player.buyIn;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Flexible(
-          child: Theme(
-            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-            child: ExpansionTile(
-              title: Text(name),
-              subtitle: Distribute(transactions: player.transactions),
-              controlAffinity: ListTileControlAffinity.leading,
-              leading: Icon(
-                Icons.info_outline,
-                color: theme.primaryColor,
-              ),
-              children: <Widget>[
-                ListTile(
-                  title: Text(
-                      'Buy In: \$${player.buyIn.toStringAsFixed(2)}  Cash Out: \$${player.cashOut.toStringAsFixed(2)}'),
-                ),
-              ],
-            ),
-          ),
+          child: PlayerInfo(player: player),
         ),
         SizedBox(
           width: 140,

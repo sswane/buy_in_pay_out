@@ -94,7 +94,16 @@ class MyAppState extends ChangeNotifier {
     b.setPayout(0);
   }
 
+  void clearAllTransactions() {
+    for (var player in players) {
+      player.clearTransactions();
+    }
+  }
+
   void calculateTransactions(List<Player> players) {
+    // transactions need cleared if back button used
+    // possibly refactor back button on that page?
+    clearAllTransactions();
     debugPrint('total players: ${players.length}');
     // Find players who broke even, should not pay or be paid
     if (kDebugMode) {

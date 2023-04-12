@@ -17,6 +17,10 @@ class Player {
   void setPayout(double newPayout) {
     payout = newPayout;
   }
+
+  void clearTransactions() {
+    transactions = [];
+  }
 }
 
 class Transaction {

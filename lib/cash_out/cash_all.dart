@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../app_state.dart';
 import '../payout/determine_payout.dart';
+import '../players/player_info.dart';
 import '../pot.dart';
 
 class CashAllOut extends StatefulWidget {
@@ -39,7 +40,7 @@ class _CashAllOutState extends State<CashAllOut> {
                 for (var player in appState.players)
                   Row(
                     children: [
-                      Flexible(child: ListTile(title: Text(player.name))),
+                      Flexible(child: PlayerInfo(player: player)),
                       SizedBox(
                         width: 115,
                         child: player.cashedEarly
