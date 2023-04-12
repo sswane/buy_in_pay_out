@@ -63,8 +63,10 @@ class _IndividualBuyInState extends State<IndividualBuyIn> {
                               ),
                             ],
                             validator: (String? value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Input valid buy in. Numbers up to 2 decimals allowed.';
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  double.parse(value) == 0) {
+                                return 'Invalid amount';
                               }
                               return null;
                             },

@@ -31,6 +31,27 @@ class _BasicBuyIn extends State<BasicBuyIn> {
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                onPressed: appState.getTotalPot() > 0
+                    ? () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const BuyCash()),
+                        );
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: theme.colorScheme.primary,
+                  foregroundColor: theme.colorScheme.onPrimary,
+                ),
+                child: const Text('Finalize Initial Bets'),
+              ),
+            ],
+          ),
           Form(
             key: _formKey,
             child: Column(
@@ -49,8 +70,10 @@ class _BasicBuyIn extends State<BasicBuyIn> {
                     ),
                   ],
                   validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Input valid buy in. Numbers up to 2 decimals allowed.';
+                    if (value == null ||
+                        value.isEmpty ||
+                        double.parse(value) == 0) {
+                      return 'Invalid amount';
                     }
                     return null;
                   },
@@ -81,22 +104,6 @@ class _BasicBuyIn extends State<BasicBuyIn> {
             child: Text('Buy In Per Player:'),
           ),
           for (var player in appState.players) IndividualBuyIn(player: player),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const BuyCash()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: theme.colorScheme.primary,
-                foregroundColor: theme.colorScheme.onPrimary,
-              ),
-              child: const Text('Finalize Initial Bets'),
-            ),
-          ),
         ],
       ),
     );
