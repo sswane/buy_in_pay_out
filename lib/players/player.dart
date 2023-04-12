@@ -14,6 +14,14 @@ class Player {
     this.payout = 0,
   });
 
+  Player.midGame({
+    required this.name,
+    required this.buyIn,
+    this.cashOut = 0,
+    this.cashedEarly = false,
+    this.payout = 0,
+  });
+
   void setPayout(double newPayout) {
     payout = newPayout;
   }

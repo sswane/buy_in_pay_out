@@ -5,7 +5,7 @@ import 'buy_in/increase.dart';
 import 'cash_out/cash_all.dart';
 import 'cash_out/cash_one.dart';
 import 'payout/determine_payout.dart';
-import 'players/add_player.dart';
+import 'players/add_midgame.dart';
 import 'pot.dart';
 import 'players/player.dart';
 
@@ -32,22 +32,19 @@ class _BuyCashState extends State<BuyCash> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                  child: IconButton(
-                      icon: const Icon(Icons.person_add),
-                      color: theme.colorScheme.primary,
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const AlertDialog(
-                              title: Text('Add Player'),
-                              actionsAlignment: MainAxisAlignment.center,
-                              content: AddPlayer(),
-                              actions: [],
-                            );
-                          },
-                        );
-                      })),
+                child: IconButton(
+                  icon: const Icon(Icons.person_add),
+                  color: theme.colorScheme.primary,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const AddPlayerMidGame();
+                      },
+                    );
+                  },
+                ),
+              ),
               ElevatedButton(
                 onPressed: appState.getRemainingPot() == 0
                     ? null

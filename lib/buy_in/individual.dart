@@ -99,7 +99,7 @@ class _IndividualBuyInState extends State<IndividualBuyIn> {
                       Navigator.pop(context);
                     },
                     child: const Text('Cancel'),
-                  )
+                  ),
                 ],
               );
             },

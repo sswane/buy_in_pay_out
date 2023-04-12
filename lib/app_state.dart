@@ -20,6 +20,11 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addPlayerMidGame(String name, double buyIn) {
+    players.add(Player.midGame(name: name, buyIn: buyIn));
+    notifyListeners();
+  }
+
   void removePlayer(Player player) {
     players.remove(player);
     notifyListeners();
