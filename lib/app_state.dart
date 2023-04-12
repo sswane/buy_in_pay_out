@@ -15,6 +15,13 @@ class MyAppState extends ChangeNotifier {
     return getTotalPot() - players.fold(0.0, (total, p) => total + p.cashOut);
   }
 
+  void reset() {
+    players = [];
+    winners = [];
+    losers = [];
+    notifyListeners();
+  }
+
   void addPlayer(String name) {
     players.add(Player(name: name));
     notifyListeners();
@@ -27,6 +34,11 @@ class MyAppState extends ChangeNotifier {
 
   void removePlayer(Player player) {
     players.remove(player);
+    notifyListeners();
+  }
+
+  void removePlayersWithNoBuyIn() {
+    players.removeWhere((player) => player.buyIn == 0);
     notifyListeners();
   }
 
@@ -47,6 +59,7 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  // should not be able to cash out if buy in 0
   void cashOutPlayer(Player player, double num) {
     player.cashOut = num;
     notifyListeners();
@@ -106,9 +119,6 @@ class MyAppState extends ChangeNotifier {
   }
 
   void calculateTransactions(List<Player> players) {
-    // transactions need cleared if back button used
-    // possibly refactor back button on that page?
-    clearAllTransactions();
     debugPrint('total players: ${players.length}');
     // Find players who broke even, should not pay or be paid
     if (kDebugMode) {

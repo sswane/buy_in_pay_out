@@ -49,7 +49,8 @@ class _AddPlayerState extends State<AddPlayer> {
                     const InputDecoration(hintText: 'Enter player\'s name'),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return 'Name is required.';
+                    playerFieldFocusNode.requestFocus();
+                    return 'Name is required';
                   }
                   if (appState.players.singleWhereOrNull(
                           (player) => player.name == value) !=

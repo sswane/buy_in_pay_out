@@ -49,6 +49,7 @@ class _BuyCashState extends State<BuyCash> {
                 onPressed: appState.getRemainingPot() == 0
                     ? null
                     : () {
+                        appState.removePlayersWithNoBuyIn();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -113,7 +114,7 @@ class IndividualBuyCash extends StatelessWidget {
               },
       ),
       trailing: ElevatedButton(
-        onPressed: player.cashedEarly == true
+        onPressed: player.cashedEarly == true || player.buyIn == 0
             ? null
             : () {
                 showDialog(

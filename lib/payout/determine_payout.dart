@@ -19,12 +19,14 @@ class DeterminePayout extends StatelessWidget {
               ? () {
                   appState.payout();
                   appState.calculateTransactions(appState.players);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Payout()),
-                  );
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                        builder: (context) => const Payout(),
+                      ))
+                      .then((value) => appState
+                          .clearAllTransactions()); // clear transactions if back button used
                 }
-              : null,
+              : null, // disable button if money is left in pot
           style: ElevatedButton.styleFrom(
             backgroundColor: theme.colorScheme.primary,
             foregroundColor: theme.colorScheme.onPrimary,

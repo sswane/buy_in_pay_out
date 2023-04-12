@@ -14,10 +14,18 @@ class IndividualBuyIn extends StatefulWidget {
 class _IndividualBuyInState extends State<IndividualBuyIn> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final txtController = TextEditingController();
+  late FocusNode buyInFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    buyInFocusNode = FocusNode();
+  }
 
   @override
   void dispose() {
     txtController.dispose();
+    buyInFocusNode.dispose();
     super.dispose();
   }
 
@@ -56,6 +64,7 @@ class _IndividualBuyInState extends State<IndividualBuyIn> {
                         Expanded(
                           child: TextFormField(
                             autofocus: true,
+                            focusNode: buyInFocusNode,
                             controller: txtController,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
@@ -66,6 +75,7 @@ class _IndividualBuyInState extends State<IndividualBuyIn> {
                               if (value == null ||
                                   value.isEmpty ||
                                   double.parse(value) == 0) {
+                                buyInFocusNode.requestFocus();
                                 return 'Invalid amount';
                               }
                               return null;

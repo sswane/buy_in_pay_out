@@ -10,19 +10,35 @@ class Payout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
+    var theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Payout')),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  appState.reset();
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: theme.colorScheme.primary,
+                  foregroundColor: theme.colorScheme.onPrimary,
+                ),
+                child: const Text('New Game'),
+              ),
+            ],
+          ),
           for (var player in appState.players)
             Column(
               children: [
                 IndividualPayout(player: player),
                 Row(
                   children: [
-                    // const Padding(padding: EdgeInsets.only(left: 70.0)),
                     const Padding(padding: EdgeInsets.only(left: 20.0)),
                     Distribute(transactions: player.transactions),
                   ],
