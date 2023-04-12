@@ -11,7 +11,7 @@ class Payout extends StatelessWidget {
     var appState = context.watch<MyAppState>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Payout / Transactions')),
+      appBar: AppBar(title: const Text('Payout')),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: <Widget>[
@@ -19,9 +19,6 @@ class Payout extends StatelessWidget {
             Column(
               children: [
                 IndividualPayout(player: player),
-                Text(
-                    'Buy In: ${player.buyIn.toStringAsFixed(2)}, Cashed Out: ${player.cashOut.toStringAsFixed(2)} '),
-                Distribute(player: player),
               ],
             ),
         ],
@@ -31,27 +28,22 @@ class Payout extends StatelessWidget {
 }
 
 class Distribute extends StatelessWidget {
-  const Distribute({super.key, required this.player});
-  final Player player;
+  const Distribute({super.key, required this.transactions});
+  final List<Transaction> transactions;
 
   @override
   Widget build(BuildContext context) {
-    if (player.transactions.isEmpty) {
-      return Row(
-        children: [
-          player.payout == 0
-              ? const Text('...broke even')
-              : const Text('under construction')
-        ],
-      );
-    } else {
-      return Row(
-        children: [
-          for (var c in player.transactions)
-            Text('${c.player.name} ${c.num.toStringAsFixed(2)} '),
-        ],
-      );
-    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        for (var t in transactions)
+          t.num > 0
+              ? Text('${t.player.name} \$${t.num.toStringAsFixed(2)}  ')
+              : Text(
+                  '${t.player.name} -\$${t.num.abs().toStringAsFixed(2)}  ',
+                ),
+      ],
+    );
   }
 }
 
@@ -68,10 +60,26 @@ class IndividualPayout extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Expanded(
-            child: ListTile(
-          title: Text(name),
-        )),
+        Flexible(
+          child: Theme(
+            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            child: ExpansionTile(
+              title: Text(name),
+              subtitle: Distribute(transactions: player.transactions),
+              controlAffinity: ListTileControlAffinity.leading,
+              leading: Icon(
+                Icons.info_outline,
+                color: theme.primaryColor,
+              ),
+              children: <Widget>[
+                ListTile(
+                  title: Text(
+                      'Buy In: \$${player.buyIn.toStringAsFixed(2)}  Cash Out: \$${player.cashOut.toStringAsFixed(2)}'),
+                ),
+              ],
+            ),
+          ),
+        ),
         SizedBox(
           width: 140,
           child: ListTile(
