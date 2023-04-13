@@ -45,10 +45,10 @@ class _BuyCashState extends State<BuyCash> {
                   },
                 ),
               ),
-              ElevatedButton(
-                onPressed: appState.getRemainingPot() == 0
-                    ? null
-                    : () {
+              appState.getRemainingPot() == 0
+                  ? const DeterminePayout()
+                  : ElevatedButton(
+                      onPressed: () {
                         appState.removePlayersWithNoBuyIn();
                         Navigator.push(
                           context,
@@ -56,12 +56,12 @@ class _BuyCashState extends State<BuyCash> {
                               builder: (context) => const CashAllOut()),
                         );
                       },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.colorScheme.primary,
-                  foregroundColor: theme.colorScheme.onPrimary,
-                ),
-                child: const Text('Cash All Out'),
-              ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: theme.colorScheme.primary,
+                        foregroundColor: theme.colorScheme.onPrimary,
+                      ),
+                      child: const Text('Cash All Out'),
+                    ),
             ],
           ),
           Form(
@@ -77,7 +77,6 @@ class _BuyCashState extends State<BuyCash> {
           ),
           const Pot(),
           const Padding(padding: EdgeInsets.only(top: 10.0)),
-          const DeterminePayout(),
         ],
       ),
     );
