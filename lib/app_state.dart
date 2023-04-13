@@ -44,7 +44,9 @@ class MyAppState extends ChangeNotifier {
 
   void buyInAll(double num) {
     for (var player in players) {
-      player.buyIn = num;
+      if (!player.cashedEarly) {
+        player.buyIn = num;
+      }
     }
     notifyListeners();
   }
