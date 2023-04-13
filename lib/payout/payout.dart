@@ -53,15 +53,28 @@ class Distribute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.only(left: 65.0, right: 20.0),
       child: Wrap(
-        spacing: 10.0,
+        spacing: 20.0,
         children: <Widget>[
           for (var t in transactions)
-            t.num > 0
-                ? Text('${t.player.name} \$${t.num.toStringAsFixed(2)}')
-                : Text('${t.player.name} -\$${t.num.abs().toStringAsFixed(2)}')
+            Wrap(
+              children: [
+                Icon(
+                  Icons.person_outline,
+                  semanticLabel: 'Add Player',
+                  color: theme.colorScheme.primary,
+                ),
+                const Padding(padding: EdgeInsets.only(right: 5.0)),
+                t.num > 0
+                    ? Text('${t.player.name} \$${t.num.toStringAsFixed(2)}')
+                    : Text(
+                        '${t.player.name} -\$${t.num.abs().toStringAsFixed(2)}')
+              ],
+            ),
         ],
       ),
     );
