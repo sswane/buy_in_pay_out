@@ -1,4 +1,4 @@
-package com.example.buy_in_pay_out
+package com.dexshelly.buyInPayOut
 
 import io.flutter.embedding.android.FlutterActivity
 
