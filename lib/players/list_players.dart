@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../app_state.dart';
+import '../players/edit_player_name.dart';
 
 class ListPlayers extends StatelessWidget {
   const ListPlayers({super.key});
@@ -19,16 +20,35 @@ class ListPlayers extends StatelessWidget {
         ),
         for (var player in appState.players)
           ListTile(
-            leading: IconButton(
-              icon: const Icon(
-                Icons.delete_outline,
-                semanticLabel: 'Delete',
+            leading: Wrap(children: [
+              IconButton(
+                icon: const Icon(
+                  Icons.delete_outline,
+                  semanticLabel: 'Delete',
+                ),
+                color: theme.colorScheme.primary,
+                onPressed: () {
+                  appState.removePlayer(player);
+                },
               ),
-              color: theme.colorScheme.primary,
-              onPressed: () {
-                appState.removePlayer(player);
-              },
-            ),
+              IconButton(
+                icon: const Icon(
+                  Icons.edit_outlined,
+                  semanticLabel: 'Edit',
+                ),
+                color: theme.colorScheme.primary,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return EditPlayerName(
+                        player: player,
+                      );
+                    },
+                  );
+                },
+              ),
+            ]),
             title: Text(player.name),
           ),
       ],
