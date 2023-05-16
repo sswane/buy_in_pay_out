@@ -13,6 +13,7 @@ class Payout extends StatelessWidget {
     var theme = Theme.of(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text('Payout')),
       body: ListView(
         padding: const EdgeInsets.all(20.0),

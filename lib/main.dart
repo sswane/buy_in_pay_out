@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow),
         ),
         home: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(title: const Text('Buy In Pay Out')),
           body: const MainBody(),
         ),
