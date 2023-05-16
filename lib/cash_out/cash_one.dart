@@ -47,6 +47,7 @@ class _IndividualCashOutState extends State<IndividualCashOut> {
               child: TextFormField(
                 autofocus: true,
                 controller: txtController,
+                keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
                     RegExp(r'^\d+\.?\d{0,2}'),

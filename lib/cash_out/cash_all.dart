@@ -27,6 +27,7 @@ class _CashAllOutState extends State<CashAllOut> {
     var appState = context.watch<MyAppState>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text('Input Remaining Funds')),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
@@ -46,9 +47,8 @@ class _CashAllOutState extends State<CashAllOut> {
                       SizedBox(
                         width: 115,
                         child: player.cashedEarly
-                            ? Text(
-                                '\$${player.cashOut.toStringAsFixed(2)}',
-                                textAlign: TextAlign.right,
+                            ? DisplayCashedEarly(
+                                cashOut: player.cashOut,
                               )
                             : TextFormField(
                                 keyboardType: TextInputType.number,
@@ -81,6 +81,26 @@ class _CashAllOutState extends State<CashAllOut> {
           const Pot(),
         ],
       ),
+    );
+  }
+}
+
+class DisplayCashedEarly extends StatelessWidget {
+  const DisplayCashedEarly({super.key, required this.cashOut});
+  final double cashOut;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const Padding(padding: EdgeInsets.only(top: 10)),
+        Text(
+          '\$${cashOut.toStringAsFixed(2)}',
+          textAlign: TextAlign.right,
+          style: const TextStyle(fontSize: 16),
+        ),
+      ],
     );
   }
 }

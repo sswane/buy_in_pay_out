@@ -45,6 +45,8 @@ class _AddPlayerState extends State<AddPlayer> {
                 autofocus: true,
                 focusNode: playerFieldFocusNode,
                 controller: txtController,
+                textCapitalization: TextCapitalization.words,
+                keyboardType: TextInputType.text,
                 decoration:
                     const InputDecoration(hintText: 'Enter player\'s name'),
                 validator: (String? value) {

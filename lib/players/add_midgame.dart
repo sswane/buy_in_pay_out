@@ -85,6 +85,7 @@ class _AddPlayerMidGameState extends State<AddPlayerMidGame> {
               autofocus: true,
               focusNode: buyInFieldFocusNode,
               controller: buyInTxtCtrl,
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                   hintText: 'Enter buy in',
                   icon: Icon(

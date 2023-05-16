@@ -24,6 +24,7 @@ class _BuyCashState extends State<BuyCash> {
     var theme = Theme.of(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text('Buy In Cash Out')),
       body: ListView(
         padding: const EdgeInsets.all(20.0),

@@ -33,12 +33,15 @@ class Payout extends StatelessWidget {
               ),
             ],
           ),
+          const Padding(padding: EdgeInsets.only(bottom: 10)),
           for (var player in appState.players)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 IndividualPayout(player: player),
+                const Padding(padding: EdgeInsets.only(bottom: 10)),
                 Distribute(transactions: player.transactions),
+                const Padding(padding: EdgeInsets.only(bottom: 20)),
               ],
             ),
         ],
@@ -56,7 +59,7 @@ class Distribute extends StatelessWidget {
     var theme = Theme.of(context);
 
     return Padding(
-      padding: const EdgeInsets.only(left: 65.0, right: 20.0),
+      padding: const EdgeInsets.only(left: 30.0, right: 20.0),
       child: Wrap(
         spacing: 20.0,
         children: <Widget>[
@@ -65,7 +68,7 @@ class Distribute extends StatelessWidget {
               children: [
                 Icon(
                   Icons.person_outline,
-                  semanticLabel: 'Add Player',
+                  semanticLabel: 'Player',
                   color: theme.colorScheme.primary,
                 ),
                 const Padding(padding: EdgeInsets.only(right: 5.0)),
@@ -75,6 +78,18 @@ class Distribute extends StatelessWidget {
                         '${t.player.name} -\$${t.num.abs().toStringAsFixed(2)}')
               ],
             ),
+          if (transactions.isEmpty)
+            Wrap(
+              children: [
+                Icon(
+                  Icons.balance_outlined,
+                  semanticLabel: 'Broke Even',
+                  color: theme.colorScheme.primary,
+                ),
+                const Padding(padding: EdgeInsets.only(right: 5.0)),
+                const Text('broke even')
+              ],
+            )
         ],
       ),
     );
