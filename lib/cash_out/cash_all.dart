@@ -32,7 +32,7 @@ class _CashAllOutState extends State<CashAllOut> {
       body: ListView(
         padding: const EdgeInsets.all(20.0),
         children: [
-          Row(mainAxisAlignment: MainAxisAlignment.end, children: const [
+          const Row(mainAxisAlignment: MainAxisAlignment.end, children: [
             DeterminePayout(),
           ]),
           Form(
