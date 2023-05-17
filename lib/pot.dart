@@ -13,14 +13,14 @@ class Pot extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
-          width: 131,
+          width: 138,
           child: ListTile(
             title: Text('\$${appState.getTotalPot().toStringAsFixed(2)}'),
             subtitle: const Text('Total Pot'),
           ),
         ),
         SizedBox(
-          width: 131,
+          width: 138,
           child: ListTile(
             title: Text('\$${appState.getRemainingPot().toStringAsFixed(2)}',
                 textAlign: TextAlign.right),
