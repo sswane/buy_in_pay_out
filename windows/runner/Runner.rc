@@ -89,11 +89,11 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.dexshelly" "\0"
+            VALUE "CompanyName", "com.yellowChair" "\0"
             VALUE "FileDescription", "buy_in_pay_out" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "buy_in_pay_out" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 com.dexshelly. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 com.yellowChair. All rights reserved." "\0"
             VALUE "OriginalFilename", "buy_in_pay_out.exe" "\0"
             VALUE "ProductName", "buy_in_pay_out" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dexshelly.buyInPayOut">
+    package="com.yellowChair.buyInPayOut">
    <application
         android:label="buy_in_pay_out"
         android:name="${applicationName}"

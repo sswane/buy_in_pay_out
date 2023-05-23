@@ -94,7 +94,7 @@ class DisplayCashedEarly extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        const Padding(padding: EdgeInsets.only(top: 10)),
+        const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
         Text(
           '\$${cashOut.toStringAsFixed(2)}',
           textAlign: TextAlign.right,

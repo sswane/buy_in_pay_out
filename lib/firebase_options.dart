@@ -58,21 +58,21 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyA_5yASGEb5kyjfeX1RTDiV8crrYcsyvoU',
-    appId: '1:120079819487:ios:c10b3e9d50726e2d87ff6a',
+    appId: '1:120079819487:ios:717c4e0f079932d487ff6a',
     messagingSenderId: '120079819487',
     projectId: 'yellow-chair',
     storageBucket: 'yellow-chair.appspot.com',
-    iosClientId: '120079819487-ktbjglnnvsk0imjp8h2lmm840sc9hdnn.apps.googleusercontent.com',
-    iosBundleId: 'com.dexshelly.buyInPayOut',
+    iosClientId: '120079819487-0f7cr9f6u29c64e8374ujgieo3f2a0og.apps.googleusercontent.com',
+    iosBundleId: 'com.yellowChair.buyInPayOut',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyA_5yASGEb5kyjfeX1RTDiV8crrYcsyvoU',
-    appId: '1:120079819487:ios:c10b3e9d50726e2d87ff6a',
+    appId: '1:120079819487:ios:717c4e0f079932d487ff6a',
     messagingSenderId: '120079819487',
     projectId: 'yellow-chair',
     storageBucket: 'yellow-chair.appspot.com',
-    iosClientId: '120079819487-ktbjglnnvsk0imjp8h2lmm840sc9hdnn.apps.googleusercontent.com',
-    iosBundleId: 'com.dexshelly.buyInPayOut',
+    iosClientId: '120079819487-0f7cr9f6u29c64e8374ujgieo3f2a0og.apps.googleusercontent.com',
+    iosBundleId: 'com.yellowChair.buyInPayOut',
   );
 }
