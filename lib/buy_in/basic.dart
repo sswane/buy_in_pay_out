@@ -31,6 +31,7 @@ class _BasicBuyIn extends State<BasicBuyIn> {
       appBar: AppBar(title: const Text('Buy In For All Players')),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

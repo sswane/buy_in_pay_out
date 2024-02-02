@@ -28,6 +28,7 @@ class _BuyCashState extends State<BuyCash> {
       appBar: AppBar(title: const Text('Buy In Cash Out')),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

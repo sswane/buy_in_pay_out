@@ -51,6 +51,7 @@ class MainBody extends StatelessWidget {
     return Center(
       child: ListView(
         padding: const EdgeInsets.all(20.0),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

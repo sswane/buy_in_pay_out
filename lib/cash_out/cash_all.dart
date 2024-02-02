@@ -31,6 +31,7 @@ class _CashAllOutState extends State<CashAllOut> {
       appBar: AppBar(title: const Text('Input Remaining Funds')),
       body: ListView(
         padding: const EdgeInsets.all(20.0),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         children: [
           const Row(mainAxisAlignment: MainAxisAlignment.end, children: [
             DeterminePayout(),
