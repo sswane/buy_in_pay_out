@@ -126,9 +126,9 @@ class MyAppState extends ChangeNotifier {
         '${a.name} is paid remaining owed \$${a.payout.toStringAsFixed(2)} by ${b.name}');
     a.transactions.add(Transaction(player: b, num: a.payout));
     b.transactions.add(Transaction(player: a, num: a.payout));
-    a.setPayout(0);
     b.setPayout(b.payout + a.payout);
-    debugPrint('${b.name} owes \$${b.payout.abs().toStringAsFixed(2)}');
+    a.setPayout(0);
+    debugPrint('${b.name} owes ${b.payout}');
   }
 
   void clearAllTransactions() {
