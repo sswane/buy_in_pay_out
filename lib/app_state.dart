@@ -128,7 +128,7 @@ class MyAppState extends ChangeNotifier {
     b.transactions.add(Transaction(player: a, num: a.payout));
     b.setPayout(b.payout + a.payout);
     a.setPayout(0);
-    debugPrint('${b.name} owes ${b.payout}');
+    debugPrint('${b.name} owes \$${b.payout.abs().toStringAsFixed(2)}');
   }
 
   void clearAllTransactions() {
