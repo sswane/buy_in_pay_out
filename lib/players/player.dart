@@ -29,6 +29,11 @@ class Player {
   void clearTransactions() {
     transactions = [];
   }
+
+  @override
+  String toString() {
+    return name;
+  }
 }
 
 class Transaction {

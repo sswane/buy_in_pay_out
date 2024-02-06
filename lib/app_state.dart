@@ -95,8 +95,8 @@ class MyAppState extends ChangeNotifier {
   void splitPlayers() {
     winners = players.where((p) => p.payout > 0).toList();
     losers = players.where((p) => p.payout < 0).toList();
-    debugPrint('winners: ${winners.length}');
-    debugPrint('losers: ${losers.length}');
+    debugPrint('winners (${winners.length}): $winners');
+    debugPrint('losers (${losers.length}): $losers');
   }
 
   // call when player a is paid out all owed
@@ -117,6 +117,18 @@ class MyAppState extends ChangeNotifier {
     b.transactions.add(Transaction(player: a, num: b.payout));
     a.setPayout(a.payout + b.payout);
     b.setPayout(0);
+    debugPrint('${a.name} still needs \$${a.payout.toStringAsFixed(2)}');
+  }
+
+  // player a is paid remaining due by player b
+  void remainingPayment(Player a, Player b) {
+    debugPrint(
+        '${a.name} is paid remaining owed \$${a.payout.toStringAsFixed(2)} by ${b.name}');
+    a.transactions.add(Transaction(player: b, num: a.payout));
+    b.transactions.add(Transaction(player: a, num: a.payout));
+    a.setPayout(0);
+    b.setPayout(b.payout + a.payout);
+    debugPrint('${b.name} owes \$${b.payout.abs().toStringAsFixed(2)}');
   }
 
   void clearAllTransactions() {
@@ -126,7 +138,7 @@ class MyAppState extends ChangeNotifier {
   }
 
   void calculateTransactions(List<Player> players) {
-    debugPrint('total players: ${players.length}');
+    debugPrint('total players (${players.length}): $players');
     // Find players who broke even, should not pay or be paid
     if (kDebugMode) {
       printBrokeEven();
@@ -145,35 +157,45 @@ class MyAppState extends ChangeNotifier {
     }
     winners.removeWhere((p) => p.payout == 0);
 
-    debugPrint('winners after direct: ${winners.length}');
-    debugPrint('losers after direct: ${losers.length}');
+    debugPrint('winners after direct (${winners.length}): $winners');
+    debugPrint('losers after direct (${losers.length}): $losers');
 
     winners.sort((p1, p2) => p2.payout.compareTo(p1.payout));
     losers.sort((p1, p2) => p2.payout.compareTo(p1.payout));
 
-    while (losers.isNotEmpty && winners.isNotEmpty) {
-      for (var winner in winners) {
-        debugPrint('winner looking for payment: ${winner.name}');
-        while (winner.payout > 0) {
-          if (losers.length == 1) {
-            fullPayment(winner, losers.first);
-            losers.removeWhere((p) => p.payout == 0);
-            break;
-          }
-          var match =
-              losers.lastWhereOrNull((p) => p.payout + winner.payout >= 0);
-          if (match != null) {
-            partialPayment(winner, match);
-            losers.remove(match);
-          } else {
-            debugPrint('${winner.name} needs more money');
-            break;
-          }
+    for (var winner in winners) {
+      debugPrint('winner looking for payment: ${winner.name}');
+      while (winner.payout > 0) {
+        if (losers.length == 1) {
+          fullPayment(winner, losers.first);
+          losers.removeWhere((p) => p.payout == 0);
+          break;
+        }
+        // find player who could pay all money to another
+        var match =
+            losers.lastWhereOrNull((p) => p.payout + winner.payout >= 0);
+        if (match != null) {
+          partialPayment(winner, match);
+          losers.remove(match);
+        } else {
+          debugPrint(
+              '${winner.name} needs more money \$${winner.payout.toStringAsFixed(2)}');
+          break;
         }
       }
-      winners.removeWhere((p) => p.payout == 0);
-      debugPrint('winners: ${winners.length}');
-      debugPrint('losers: ${losers.length}');
     }
+    winners.removeWhere((p) => p.payout == 0);
+    debugPrint('winners (${winners.length}): $winners');
+    debugPrint('losers (${losers.length}): $losers');
+
+    for (var winner in winners) {
+      while (winner.payout > 0) {
+        // winner needs to be paid by 2 losers
+        remainingPayment(winner, losers.first);
+        losers.removeWhere((p) => p.payout == 0);
+        losers.sort((p1, p2) => p1.payout.compareTo(p2.payout));
+      }
+    }
+    winners.removeWhere((p) => p.payout == 0);
   }
 }
