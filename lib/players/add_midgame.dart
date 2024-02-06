@@ -51,6 +51,7 @@ class _AddPlayerMidGameState extends State<AddPlayerMidGame> {
               autofocus: true,
               focusNode: playerFieldFocusNode,
               controller: playerTxtCtrl,
+              textCapitalization: TextCapitalization.words,
               decoration: const InputDecoration(
                   hintText: 'Enter name',
                   icon: Icon(

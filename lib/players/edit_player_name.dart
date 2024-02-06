@@ -25,6 +25,7 @@ class _EditPlayerNameState extends State<EditPlayerName> {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var player = widget.player;
+    txtController.text = player.name;
 
     return AlertDialog(
       title: const Text('Edit Player Name'),
