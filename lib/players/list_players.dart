@@ -18,7 +18,7 @@ class ListPlayers extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Text(playerString(appState.players.length)),
         ),
-        for (var player in appState.players)
+        for (var player in appState.players.reversed)
           ListTile(
             leading: Wrap(children: [
               IconButton(
