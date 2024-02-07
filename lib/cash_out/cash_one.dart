@@ -47,7 +47,8 @@ class _IndividualCashOutState extends State<IndividualCashOut> {
               child: TextFormField(
                 autofocus: true,
                 controller: txtController,
-                keyboardType: TextInputType.number,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
                     RegExp(r'^\d+\.?\d{0,2}'),
@@ -78,9 +79,11 @@ class _IndividualCashOutState extends State<IndividualCashOut> {
       actions: <Widget>[
         ElevatedButton(
           onPressed: () {
-            appState.cashOutEarly(player, double.parse(txtController.text));
-            txtController.clear();
-            Navigator.pop(context);
+            if (_formKey.currentState!.validate()) {
+              appState.cashOutEarly(player, double.parse(txtController.text));
+              txtController.clear();
+              Navigator.pop(context);
+            }
           },
           child: const Text('Submit'),
         ),

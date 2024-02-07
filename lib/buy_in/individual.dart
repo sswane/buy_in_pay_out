@@ -66,7 +66,8 @@ class _IndividualBuyInState extends State<IndividualBuyIn> {
                             autofocus: true,
                             focusNode: buyInFocusNode,
                             controller: txtController,
-                            keyboardType: TextInputType.number,
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal: true),
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
                                 RegExp(r'^\d+\.?\d{0,2}'),

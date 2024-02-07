@@ -52,7 +52,9 @@ class _CashAllOutState extends State<CashAllOut> {
                                 cashOut: player.cashOut,
                               )
                             : TextFormField(
-                                keyboardType: TextInputType.number,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                        decimal: true),
                                 textAlign: TextAlign.right,
                                 decoration: const InputDecoration(
                                   hintText: 'Cash Out',

@@ -43,7 +43,8 @@ class _IncreaseBuyInState extends State<IncreaseBuyIn> {
             Expanded(
               child: TextFormField(
                 autofocus: true,
-                keyboardType: TextInputType.number,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 controller: txtController,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(

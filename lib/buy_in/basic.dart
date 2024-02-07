@@ -61,7 +61,8 @@ class _BasicBuyIn extends State<BasicBuyIn> {
               children: <Widget>[
                 TextFormField(
                   autofocus: true,
-                  keyboardType: TextInputType.number,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
                   controller: txtController,
                   decoration: const InputDecoration(
                     hintText: 'Enter buy in for all players',
