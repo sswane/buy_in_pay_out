@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:collection/collection.dart';
 import 'players/player.dart';
@@ -24,6 +25,8 @@ class MyAppState extends ChangeNotifier {
 
   void addPlayer(String name) {
     players.add(Player(name: name.trim()));
+    FirebaseAnalytics.instance
+        .logEvent(name: 'add_player', parameters: {'name': name.trim()});
     notifyListeners();
   }
 

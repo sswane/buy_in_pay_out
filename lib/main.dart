@@ -13,7 +13,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
   runApp(const MyApp());
 }
 
